@@ -1,4 +1,4 @@
-#include "../../main/app_main_defines.h"
+#include "app_main_defines.h"
 /* Wi-Fi Provisioning Manager Example
 
    This example code is in the Public Domain (or CC0 licensed, at your option.)
