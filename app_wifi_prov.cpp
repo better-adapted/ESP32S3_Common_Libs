@@ -1,4 +1,5 @@
-#include "app_main_defines.h"
+#include "../../main/app_main_defines.h"
+#include "app_wifi_prov.h"
 #ifdef APP_SUPPORT_WIFI_PROV
 /* Wi-Fi Provisioning Manager Example
 
