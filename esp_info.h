@@ -1,13 +1,11 @@
 #include "app_main_defines.h"
 
 #include <Arduino.h>
-#include <WiFi.h>
 
 #include "esp_chip_info.h"
 #include <inttypes.h>
 
 #include "esp_heap_caps.h"
-#include "esp_chip_info.h"
 #include "esp_partition.h"
 #include "esp_mac.h"
 #include "esp_log.h"

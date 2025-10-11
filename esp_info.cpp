@@ -45,7 +45,7 @@ void get_sha256_of_partitions(Stream *pStream)
 String Get_Version_Info_String()
 {
 	char temp[512]={};
-	sprintf(temp,"HW=%s,FW=%s,DT=%s,TM=%s,MAC:%s", hardware_version,firmware_version, __DATE__, __TIME__,WiFi.macAddress().c_str());
+	sprintf(temp,"HW=%s,FW=%s,DT=%s,TM=%s", hardware_version,firmware_version, __DATE__, __TIME__);
 	return temp;
 }
 
