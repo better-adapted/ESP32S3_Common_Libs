@@ -36,3 +36,5 @@
 #include "qrcode.h"
 
 void app_wifi_prov_main(bool reset_settings);
+void wifi_prov_network_reset();
+void wifi_prov_init();

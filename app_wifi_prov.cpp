@@ -541,4 +541,45 @@ void app_wifi_prov_main(bool reset_settings)
 #endif
 
 }
+
+extern void wifi_prov_led_RGB(int pMode);
+extern  bool wifi_prov_switch_get();
+extern  void wifi_prov_WDT_Feed();
+
+void wifi_prov_network_reset() {
+	wifi_config_t current_conf;
+	esp_wifi_get_config((wifi_interface_t)ESP_IF_WIFI_STA, &current_conf);
+	memset(current_conf.sta.ssid, 0, sizeof(current_conf.sta.ssid));
+	memset(current_conf.sta.password, 0, sizeof(current_conf.sta.password));
+	esp_wifi_set_config((wifi_interface_t)ESP_IF_WIFI_STA, &current_conf);
+}
+
+void wifi_prov_init() {
+	if (wifi_prov_switch_get()) {
+		Serial.printf("Provision Switch Active");
+		Serial.println();
+
+		int loop_counter = 0;
+		bool led_toggle = 0;
+
+		while (wifi_prov_switch_get()) {
+			delay(100);
+			loop_counter++;
+
+			if ((loop_counter > 50) && (loop_counter < 100)) {
+				wifi_prov_led_RGB(led_toggle); // Config switch power up
+				led_toggle = !led_toggle;
+			} else {
+				wifi_prov_led_RGB(1); // Config switch power up
+			}
+		}
+
+		if (loop_counter > 100) {
+			wifi_prov_network_reset();
+		}
+		app_wifi_prov_main(1);
+	} else {
+		wifi_prov_led_RGB(2); // Config switch power up
+	}
+}
 #endif
