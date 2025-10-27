@@ -17,4 +17,4 @@
 void app_wifi_prov_main(bool reset_settings);
 void wifi_prov_network_reset();
 void wifi_prov_init();
-bool wifi_prov_Active();
+uint32_t wifi_prov_Active_ms();

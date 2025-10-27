@@ -9,7 +9,7 @@ const char * service_name = "PROV_123"; // Name of your device (the Espressif ap
 const char * service_key = NULL; // Password used for SofAP method (NULL = no password needed)
 bool reset_provisioned = false; // When true the library will automatically delete previously provisioned data.
 
-bool ProvActive=false;
+static uint32_t ProvActiveTimestamp;
 
 // WARNING: SysProvEvent is called from a separate FreeRTOS task (thread)!
 void SysProvEvent(arduino_event_t *sys_event) {
@@ -30,7 +30,7 @@ void SysProvEvent(arduino_event_t *sys_event) {
     
     case ARDUINO_EVENT_PROV_START:
     {
-		ProvActive=true;
+		ProvActiveTimestamp=millis();
 	    Serial.println("\nProvisioning started\nGive Credentials of your access point using smartphone app"); 
 	    break;		
 	}
@@ -62,14 +62,14 @@ void SysProvEvent(arduino_event_t *sys_event) {
     case ARDUINO_EVENT_PROV_CRED_SUCCESS:
     {
 	    Serial.println("\nProvisioning Successful");
-	    ProvActive=false;
+	    ProvActiveTimestamp=0;
 	    break;
 	}
 		
     case ARDUINO_EVENT_PROV_END:
     {
         Serial.println("\nProvisioning Ends"); break;		
-		ProvActive=false;
+		ProvActiveTimestamp=0;
 		break;
 	}
 	
@@ -105,9 +105,12 @@ void app_wifi_prov_main(bool reset_settings)
   WiFiProv.printQR(service_name, pop, "ble");
 }
 
-bool wifi_prov_Active()
+uint32_t wifi_prov_Active_ms()
 {
-	return ProvActive;
+	if(ProvActiveTimestamp==0)
+		return 0;
+	
+	return millis() - ProvActiveTimestamp;
 }
 
 void wifi_prov_init() {
