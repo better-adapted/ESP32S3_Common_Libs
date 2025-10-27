@@ -7,7 +7,7 @@
 const char * pop = "abcd1234"; // Proof of possession - otherwise called a PIN - string provided by the device, entered by the user in the phone app
 const char * service_name = "PROV_123"; // Name of your device (the Espressif apps expects by default device name starting with "Prov_")
 const char * service_key = NULL; // Password used for SofAP method (NULL = no password needed)
-bool reset_provisioned = false; // When true the library will automatically delete previously provisioned data.
+bool reset_provisioned = true; // When true the library will automatically delete previously provisioned data.
 
 static uint32_t ProvActiveTimestamp;
 
